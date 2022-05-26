@@ -14,24 +14,27 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
-    private final ProductService productService;
+    @Autowired ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
-
-    @GetMapping(value = "/products")
+    @GetMapping(value = {"/",""})
     public ResponseEntity<List<Product>> getAllProduct(){
         List<Product> products = productService.getAllProducts();
         ResponseEntity<List<Product>> responseEntity;
         responseEntity = new ResponseEntity<>(products, HttpStatus.OK);
         return responseEntity;
     }
+    @GetMapping(value = {"/{prodID}"})
+    public ResponseEntity<Product> getProduct(@PathVariable ("prodID") int prodID) throws ProductWithTheIDDoesntExistException {
+        Product product = productService.getProductById(prodID);
+        ResponseEntity<Product> responseEntity;
+        responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+        return responseEntity;
+    }
 
-    @PostMapping("/products")
+    @PostMapping({"/",""})
     public ResponseEntity<?> addProductHandler(@RequestBody Product product){
         ResponseEntity<?> responseEntity;
         try {
@@ -43,12 +46,12 @@ public class ProductController {
         }
         return responseEntity;
     }
-    @PutMapping("/products/")
+    @PutMapping({"/",""})
     public ResponseEntity<Product> updateProductHandler(@RequestBody Product product) throws ProductWithTheIDDoesntExistException, ProductWithTheIDAlreadyExistsException {
         Product updatedProduct = productService.updateProduct(product);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
-    @DeleteMapping("/products/")
+    @DeleteMapping("/{prodId}")
     public ResponseEntity<?> deleteProductHandler(@PathVariable("prodId") int id) throws ProductWithTheIDDoesntExistException {
         productService.removeProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
