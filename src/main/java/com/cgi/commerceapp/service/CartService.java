@@ -12,9 +12,10 @@ import java.util.List;
 @Transactional
 public interface CartService {
 
-    Iterable<Product> getItemsInCart();
-    void removeItem(Long id);
-    Product addItemToCart(Product product);
+    List<Cart> getItemsInCart();
+    void removeItem(Product product);
+    Cart addItemToCart(Product product);
 
     void purchaseItems();
+    double getCost();
 }

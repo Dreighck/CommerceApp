@@ -1,6 +1,7 @@
 package com.cgi.commerceapp.controller;
 
 import com.cgi.commerceapp.exceptions.ProductWithTheIDAlreadyExistsException;
+import com.cgi.commerceapp.model.Cart;
 import com.cgi.commerceapp.model.Product;
 import com.cgi.commerceapp.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,9 @@ public class CartController {
    CartService cartService;
 
     @GetMapping(value={"/",""})
-    public ResponseEntity<List<Product>> getAllItems(){
-        Iterable<Product> items = cartService.getItemsInCart();
-        ResponseEntity<List<Product>> responseEntity;
-        List<Product> itemList = List.of(items.iterator().next());
+    public ResponseEntity<List<Cart>> getAllCartItems(){
+        ResponseEntity<List<Cart>> responseEntity;
+        List<Cart> itemList = cartService.getItemsInCart();
         responseEntity=new ResponseEntity<>(itemList, HttpStatus.OK);
         return responseEntity;
     }
@@ -30,9 +30,8 @@ public class CartController {
     public ResponseEntity<?> addToCartHandler(@RequestBody Product product){
         ResponseEntity<?> responseEntity;
         try {
-            Product prod;
-            prod = cartService.addItemToCart(product);
-            responseEntity = new ResponseEntity<>(prod, HttpStatus.CREATED);
+            cartService.addItemToCart(product);
+            responseEntity = new ResponseEntity<>(HttpStatus.ACCEPTED);
         }catch (Exception e){
             responseEntity = new ResponseEntity<>("Failed to store, Duplicate",HttpStatus.CONFLICT);
         }

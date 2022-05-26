@@ -17,23 +17,36 @@ public class CartServiceImpl implements CartService{
     ProductRepo productRepo;
 
     @Override
-    public Iterable<Product> getItemsInCart() {
+    public List<Cart> getItemsInCart() {
       return cartRepo.findAll();
     }
 
     @Override
-    public void removeItem(Long id) {
-        cartRepo.deleteById(id);
+    public void removeItem(Product product) {
+        cartRepo.deleteById(product);
     }
 
     @Override
-    public Product addItemToCart(Product product) {
-        return cartRepo.save(product);
+    public Cart addItemToCart(Product product) {
+        return cartRepo.save(new Cart(product));
     }
 
     @Override
     public void purchaseItems(){
-        Iterable<Product> products = getItemsInCart();
-        cartRepo.delete(products.iterator().next());
+        for (Cart item: getItemsInCart()) {
+            productRepo.deleteById(item.getProduct().getId());
+        }
+        cartRepo.deleteAll();
     }
+
+    @Override
+    public double getCost() {
+        double cost =0;
+        for(Cart item : getItemsInCart()){
+            cost+=item.getProduct().getPrice();
+        }
+        return cost;
+    }
+
+
 }

@@ -29,7 +29,7 @@ public class CommerceAppApplication {
     }
     @Bean CommandLineRunner runner2(CartService cartService) {
         return args -> {
-            cartService.addItemToCart(new Product());
+            cartService.addItemToCart(new Product(6, "Phone", 500.00, "iPhone"));
         };
     }
 }
