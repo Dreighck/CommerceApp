@@ -17,6 +17,7 @@
     - Attribute - 2: String name
     - Attribute - 3: double price 
     - Attribute - 4: String description (Nullable)
+    - Attribute - 5: Cart for OnetoOne mapping
 
 #### Endpoints 
 - /api/v1/products - GET PUT POST--this will display all current Products in the db that are for sale
