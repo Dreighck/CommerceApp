@@ -11,5 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository
-public interface CartRepo extends CrudRepository<Cart, Product> {
+public interface CartRepo extends CrudRepository<Product, Long> {
 }

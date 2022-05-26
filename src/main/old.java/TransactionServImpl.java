@@ -3,6 +3,7 @@ package com.cgi.commerceapp.service;
 import com.cgi.commerceapp.exceptions.ProductWithTheIDAlreadyExistsException;
 import com.cgi.commerceapp.exceptions.ProductWithTheIDDoesntExistException;
 import com.cgi.commerceapp.model.Product;
+import com.cgi.commerceapp.repo.ProductRepo;
 import com.cgi.commerceapp.repo.TransactionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class TransactionServImpl implements TransactionService {
 
     @Autowired
     private TransactionRepo transactionRepo;
+    private ProductRepo productRepo;
 
         @Override
         public List<Product> getAllProducts() {
@@ -46,6 +48,8 @@ public class TransactionServImpl implements TransactionService {
             if (optional.isEmpty())
                 throw new ProductWithTheIDDoesntExistException();
             transactionRepo.deleteById(id);
+            productRepo.deleteById(id);
+
         }
     }
 

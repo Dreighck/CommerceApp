@@ -19,9 +19,10 @@ public class CartController {
 
     @GetMapping(value={"/",""})
     public ResponseEntity<List<Product>> getAllItems(){
-        List<Product> items = cartService.getItemsInCart();
+        Iterable<Product> items = cartService.getItemsInCart();
         ResponseEntity<List<Product>> responseEntity;
-        responseEntity=new ResponseEntity<>(items, HttpStatus.OK);
+        List<Product> itemList = List.of(items.iterator().next());
+        responseEntity=new ResponseEntity<>(itemList, HttpStatus.OK);
         return responseEntity;
     }
 

@@ -28,17 +28,12 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public Product addItemToCart(Product product) {
-
         return cartRepo.save(product);
     }
 
     @Override
     public void purchaseItems(){
-
         Iterable<Product> products = getItemsInCart();
-        for(Product product : products){
-            productRepo.delete(product);
-        }
-
+        cartRepo.delete(products.iterator().next());
     }
 }
