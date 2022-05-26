@@ -6,9 +6,8 @@
 ### List of Microservices Identified 
 - ProductService      :: Drake
 - CartService         :: Aarion
-- TransactionService  :: Drake 
 - userAccountService  :: Quentin
-- RegistrationService :: 
+- ServiceRegistry     :: 
 - GatewayService      :: Kristen
 ********************************* 
 ### Microservice - Product
