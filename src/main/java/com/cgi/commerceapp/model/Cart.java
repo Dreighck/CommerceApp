@@ -5,9 +5,13 @@ import javax.persistence.*;
 @Entity
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderNumber;
-    @Transient
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long itemNumber;
+    private String name;
+    private double price;
+
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "product")
     private Product product;
 
     public Product getProduct() {
@@ -16,29 +20,40 @@ public class Cart {
 
     public void setProduct(Product product) {
         this.product = product;
+        this.name= product.getName();
+        this.price=product.getPrice();
     }
 
     public Cart() {
     }
 
     public Cart(Product product){
+        super();
         this.product=product;
+        this.name= product.getName();
+        this.price=product.getPrice();
     }
 
-    public Cart(Long orderNumber, Product product) {
-        this.orderNumber = orderNumber;
+    public Cart(Product product, Long itemNumber) {
+        super();
+        this.itemNumber = itemNumber;
         this.product = product;
+        this.name= product.getName();
+        this.price=product.getPrice();
     }
 
-    public Long getId() {
-        return orderNumber;
+    public String getName() {
+        return name;
     }
 
-    public Long getOrderNumber() {
-        return orderNumber;
+    public double getPrice() {
+        return price;
+    }
+    public Long getItemNumber() {
+        return itemNumber;
     }
 
-    public void setOrderNumber(Long orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setItemNumber(Long orderNumber) {
+        this.itemNumber = orderNumber;
     }
 }

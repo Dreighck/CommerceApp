@@ -2,31 +2,31 @@ package com.cgi.commerceapp.model;
 
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
     private double price;
     private String description;
 
+    @OneToOne(mappedBy = "product")
+    private Cart cart;
+
     public Product() {
     }
-
-    public Product(int id, String name, double price) {
+    public Product(String name, double price) {
         super();
         this.name = name;
         this.price = price;
-        this.id = id;
     }
 
-    public Product(int id, String name, double price, @Nullable String description) {
+    public Product(String name, double price, @Nullable String description) {
         super();
         this.name = name;
         this.price = price;
@@ -66,6 +66,15 @@ public class Product {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
 
 

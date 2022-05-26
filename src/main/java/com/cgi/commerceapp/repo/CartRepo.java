@@ -11,4 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Repository
 public interface CartRepo extends JpaRepository<Cart, Product> {
+    Cart findByItemNumber(Long itemNumber);
 }
